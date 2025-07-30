@@ -46,6 +46,20 @@ class LoginAPIView(APIView):
 class CustomTokenRefreshView(TokenRefreshView):
     serializer_class = RefreshSerializer
 
+    def post(self, request, *args, **kwargs):
+        try: 
+            response = super().post(request, *args, **kwargs)
+
+            return Response({
+                "access_token": response.data["access"]
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            
+            return Response({
+                "error": "Invalid or expired refresh token"
+            }, status=status.HTTP_401_UNAUTHORIZED)
+        
 
 class LogoutAPIView(APIView):
     permission_classes = [IsAuthenticated]

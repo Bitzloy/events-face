@@ -4,7 +4,7 @@ from .models import Event, Place
 
 
 class EventSerializer(serializers.ModelSerializer):
-    place_title = serializers.CharField(source=Place.title, read_only=True)
+    place_title = serializers.CharField(source='Place.title', read_only=True)
 
     class Meta:
         model = Event
